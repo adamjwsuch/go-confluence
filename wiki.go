@@ -11,6 +11,7 @@ type Wiki struct {
 	endPoint   *url.URL
 	authMethod AuthMethod
 	client     *http.Client
+	verbose	   bool
 }
 
 func NewWiki(location string, authMethod AuthMethod) (*Wiki, error) {
@@ -23,6 +24,7 @@ func NewWiki(location string, authMethod AuthMethod) (*Wiki, error) {
 	wiki := new(Wiki)
 	wiki.endPoint = u
 	wiki.authMethod = authMethod
+	wiki.verbose = false
 
 	wiki.client = &http.Client{}
 
