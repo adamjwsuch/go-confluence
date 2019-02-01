@@ -81,11 +81,14 @@ func (w *Wiki) sendRequest(req *http.Request) ([]byte, error) {
 		return nil, err2
 	}
 
+	if res == nil {		//Catch nil response here otherwise we get strange json parsing errors later
+		return res, fmt.Errorf("nil response from Confluence server, response status %s response code %v", resp.Status, resp.StatusCode)
+	}
 	switch resp.StatusCode {
 	case http.StatusOK, http.StatusCreated, http.StatusPartialContent:
 		return res, nil
-	case http.StatusNoContent, http.StatusResetContent:
-		return res, nil
+	//case http.StatusNoContent, http.StatusResetContent:
+		//return res, nil
 	case http.StatusUnauthorized:
 		return res, fmt.Errorf("Authentication failed.")
 	case http.StatusServiceUnavailable:
