@@ -121,6 +121,9 @@ func (w *Wiki) internalCreateOrUpdateContent(content *Content, contentEndPoint *
 	if (w.Verbose) {fmt.Printf("sending to %s: %v\n", contentEndPoint.String(), string(jsonBody))}
 
 	req, err := http.NewRequest(method, contentEndPoint.String(), bytes.NewReader(jsonBody))
+	if err != nil {
+		return nil, nil, err
+	}
 	req.Header.Add("Content-Type", "application/json")
 
 	res, err := w.sendRequest(req)
